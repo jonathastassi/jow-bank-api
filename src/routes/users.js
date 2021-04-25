@@ -1,20 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-router.post('/register', function (req, res) {
-  res.send('User registered')
-})
+const controller = require('../controllers/users_controller')
 
-router.post('/login', function (req, res) {
-  res.send('User login')
-})
-
-router.get('/', function (req, res) {
-  res.send('User logged')
-})
-
-router.put('/', function (req, res) {
-  res.send('User updated')
-})
+router.post('/register', controller.register)
+router.post('/login', controller.login)
+router.get('/', controller.getUserLogged)
+router.put('/', controller.update)
 
 module.exports = router
