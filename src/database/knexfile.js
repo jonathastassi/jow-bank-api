@@ -6,7 +6,7 @@ module.exports = {
       host: 'localhost',
       user: 'postgres',
       password: 'postgres',
-      database: 'jow_banking_dev'
+      database: 'jow_bank_dev'
     },
     pool: {
       min: 2,
