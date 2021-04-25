@@ -7,6 +7,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "knex": "npx knex --knexfile ./src/database/knexfile.js",
+    "migrate:make": "npx knex --knexfile ./src/database/knexfile.js migrate:make",
+    "migrate:run": "npx knex --knexfile ./src/database/knexfile.js migrate:latest",
     "test": "jest"
   },
   "keywords": [],
