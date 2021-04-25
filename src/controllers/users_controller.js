@@ -2,8 +2,7 @@
 const db = require('../database/config')
 const repository = require('../repositories/user_repository')(db)
 
-const handleResponseSuccess = require('./utils/handle_response_success')
-const handleResponseError = require('./utils/handle_response_error')
+const handleResponse = require('./utils/handle_response')
 
 module.exports = {
   register: (req, res) => {
@@ -12,8 +11,8 @@ module.exports = {
     const { name, email, password, photo, cellphone } = req.body
 
     registerUser.call(name, email, password, photo, cellphone)
-      .then(data => res.send(handleResponseSuccess('User created with success', data[0])))
-      .catch(error => res.send(handleResponseError('Error on register user', error)))
+      .then(data => handleResponse(res, 201, 'User created with success', data[0]))
+      .catch(error => handleResponse(res, 500, 'Error on register user', error.constraint ?? error))
   },
   login: (req, res) => {
     res.send('User login')
