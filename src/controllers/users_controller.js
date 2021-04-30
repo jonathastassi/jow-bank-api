@@ -1,13 +1,11 @@
 
 const database = require('../database')
-const repository = require('../repositories/user_repository')(database)
-
+const repository = require('../repositories/user_repository')
 const handleResponse = require('./utils/handle_response')
+const registerUser = require('../domains/commands/users/register_user')(repository(database))
 
 module.exports = {
   register: (req, res) => {
-    const registerUser = require('../domains/commands/users/register_user')(repository)
-
     const { name, email, password, photo, cellphone } = req.body
 
     registerUser.call(name, email, password, photo, cellphone)
