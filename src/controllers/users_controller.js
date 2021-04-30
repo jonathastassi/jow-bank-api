@@ -1,6 +1,6 @@
 
-const db = require('../database/config')
-const repository = require('../repositories/user_repository')(db)
+const database = require('../database')
+const repository = require('../repositories/user_repository')(database)
 
 const handleResponse = require('./utils/handle_response')
 
