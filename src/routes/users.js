@@ -8,6 +8,6 @@ const validateJWT = require('../routes/security/validate_jwt')
 router.post('/register', validator.validateRegister, controller.register)
 router.post('/login', validator.validateLogin, controller.login)
 router.get('/', validateJWT, controller.getUserLogged)
-router.put('/', controller.update)
+router.put('/', validateJWT, validator.validateUpdate, controller.update)
 
 module.exports = router

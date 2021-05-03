@@ -18,8 +18,35 @@ module.exports = (db) => {
       return rows[0]
     })
 
+  const update = ({ id, name, password, photo, cellphone }) => {
+    let fieldToUpdate
+    if (password == null) {
+      fieldToUpdate = {
+        name,
+        photo,
+        cellphone
+      }
+    } else {
+      fieldToUpdate = {
+        name,
+        password,
+        photo,
+        cellphone
+      }
+    }
+
+    return db('users')
+      .where({ id })
+      .update(fieldToUpdate)
+      .returning(['id', 'name', 'email', 'photo', 'cellphone'])
+      .then(rows => {
+        return rows[0]
+      })
+  }
+
   return {
     create,
-    findBy
+    findBy,
+    update
   }
 }
