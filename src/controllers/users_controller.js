@@ -2,7 +2,7 @@
 const databaseConnection = require('./utils/get_database_connection')
 const { userRepository } = require('../repositories')
 const { handleResponseSuccess, handleResponseError } = require('./utils/handle_response')
-const { registerUser, loginUser } = require('../domains/commands/users')
+const { registerUser, loginUser, updateUser } = require('../domains/commands/users')
 
 const userRepositoryInstance = userRepository(databaseConnection())
 
@@ -27,11 +27,20 @@ const login = (request, response) => {
 }
 
 const getUserLogged = (request, response) => {
-  response.send('User logged')
+  const userId = request.userId
+
+  getUserLogged.call(userId)
+    .then(handleResponseSuccess({ response, status: 200, message: 'Info user' }))
+    .catch(handleResponseError({ response, status: 500, message: 'Error on return info user' }))
 }
 
 const update = (request, response) => {
-  response.send('User updated')
+  const userId = request.userId
+  const { name, email, password, photo, cellphone } = request.body
+
+  updateUser.call(userId)({ name, email, password, photo, cellphone })
+    .then(handleResponseSuccess({ response, status: 200, message: 'User updated with success' }))
+    .catch(handleResponseError({ response, status: 500, message: 'Error on update user' }))
 }
 
 module.exports = {
