@@ -13,7 +13,13 @@ module.exports = (db) => {
       return rows[0]
     })
 
+  const findBy = ({ field, value }) => db('users').where(field, value)
+    .then(rows => {
+      return rows[0]
+    })
+
   return {
-    create
+    create,
+    findBy
   }
 }
