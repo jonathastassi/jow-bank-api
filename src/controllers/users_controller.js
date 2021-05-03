@@ -3,7 +3,7 @@ const { databaseConfig } = require('../config')
 const database = require('../database')
 const { userRepository } = require('../repositories')
 const { handleResponseSuccess, handleResponseError } = require('./utils/handle_response')
-const { registerUser } = require('../domains/commands/users')
+const { registerUser, loginUser } = require('../domains/commands/users')
 
 const register = (request, response) => {
   const { name, email, password, photo, cellphone } = request.body
@@ -16,7 +16,11 @@ const register = (request, response) => {
 }
 
 const login = (request, response) => {
-  response.send('User login')
+  const { email, password } = response.body
+
+  loginUser(userRepository(database(databaseConfig))).call(email, password)
+    .then(handleResponseSuccess({ response, status: 200, message: 'Login with success' }))
+    .catch(handleResponseError({ response, status: 500, message: 'Error on login' }))
 }
 
 const getUserLogged = (request, response) => {
