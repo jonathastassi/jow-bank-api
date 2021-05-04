@@ -1,0 +1,34 @@
+const TABLE_NAME = 'transactions'
+
+module.exports = (db) => {
+  const create = ({ originId, destinationId, value }) => db(TABLE_NAME).insert(
+    {
+      origin_id: originId,
+      destination_id: destinationId,
+      value
+    }
+  )
+    .then(rows => {
+      return rows[0]
+    })
+
+  const sumTransactionsValuePerDate = ({ originId, date }) => {
+    return db(TABLE_NAME)
+      .where('origin_id', originId)
+      .where(
+        db.raw('created_at::DATE = ?', date)
+      )
+      .sum('value')
+      .then(rows => {
+        return rows[0]
+      })
+  }
+
+  const findAllBy = ({ field, value }) => db(TABLE_NAME).where(field, value).orderBy('created_at', 'desc')
+
+  return {
+    create,
+    sumTransactionsValuePerDate,
+    findAllBy
+  }
+}
