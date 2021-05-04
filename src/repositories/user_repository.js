@@ -1,5 +1,9 @@
+const findByFunction = require('./utils/find_by')
+
+const TABLE_NAME = 'users'
+
 module.exports = (db) => {
-  const create = ({ name, email, password, photo, cellphone }) => db('users').insert(
+  const create = ({ name, email, password, photo, cellphone }) => db(TABLE_NAME).insert(
     {
       name,
       email,
@@ -13,10 +17,7 @@ module.exports = (db) => {
       return rows[0]
     })
 
-  const findBy = ({ field, value }) => db('users').where(field, value)
-    .then(rows => {
-      return rows[0]
-    })
+  const findBy = findByFunction(db, TABLE_NAME)
 
   const update = ({ id, name, password, photo, cellphone }) => {
     let fieldToUpdate
@@ -35,7 +36,7 @@ module.exports = (db) => {
       }
     }
 
-    return db('users')
+    return db(TABLE_NAME)
       .where({ id })
       .update(fieldToUpdate)
       .returning(['id', 'name', 'email', 'photo', 'cellphone'])

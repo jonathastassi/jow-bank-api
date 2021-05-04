@@ -16,7 +16,7 @@ module.exports = (db) => {
     return db(TABLE_NAME)
       .where('origin_id', originId)
       .where(
-        db.raw('created_at::DATE = ?', '2021-05-04')
+        db.raw('created_at::DATE = ?', date)
       )
       .sum('value')
       .then(rows => {
