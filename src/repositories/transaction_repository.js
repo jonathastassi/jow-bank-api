@@ -24,8 +24,11 @@ module.exports = (db) => {
       })
   }
 
+  const findAllBy = ({ field, value }) => db(TABLE_NAME).where(field, value).orderBy('created_at', 'desc')
+
   return {
     create,
-    sumTransactionsValuePerDate
+    sumTransactionsValuePerDate,
+    findAllBy
   }
 }
