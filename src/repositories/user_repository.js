@@ -8,7 +8,7 @@ module.exports = (db) => {
       cellphone
     }
   )
-    .returning(['name', 'email', 'photo', 'cellphone'])
+    .returning(['id', 'name', 'email', 'photo', 'cellphone'])
     .then(rows => {
       return rows[0]
     })

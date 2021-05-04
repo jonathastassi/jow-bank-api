@@ -1,13 +1,15 @@
 
 const database = require('../database')
-const repository = require('../repositories/user_repository')
+const userRepository = require('../repositories/user_repository')
+const accountRepository = require('../repositories/account_repository')
+
 const handleResponseSuccess = require('./utils/handle_response_success')
 const handleResponseError = require('./utils/handle_response_error')
 
-const registerUser = require('../domains/commands/users/register_user')(repository(database))
-const loginUser = require('../domains/commands/users/login_user')(repository(database))
-const getUserLogged = require('../domains/commands/users/get_user')(repository(database))
-const updateUser = require('../domains/commands/users/update_user')(repository(database))
+const registerUser = require('../domains/commands/users/register_user')({ userRepository, accountRepository, database })
+const loginUser = require('../domains/commands/users/login_user')(userRepository(database))
+const getUserLogged = require('../domains/commands/users/get_user')(userRepository(database))
+const updateUser = require('../domains/commands/users/update_user')(userRepository(database))
 
 module.exports = {
   register: (req, res) => {
