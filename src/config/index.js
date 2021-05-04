@@ -21,6 +21,9 @@ const validateEnvironmentVariables = (path = './src/config/.env') => {
   if (!process.env.DATABASE_NAME) {
     throw new Error("Database name doesn't defined")
   }
+  if (!process.env.DAILYLIMITTRANSACTION) {
+    throw new Error("Daily limit transaction name doesn't defined")
+  }
 }
 
 module.exports = validateEnvironmentVariables
