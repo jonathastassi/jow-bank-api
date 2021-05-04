@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "knex": "knex --knexfile ./src/database/knexfile.js",
-    "migrate:make": "knex --knexfile ./src/database/knexfile.js migrate:make",
-    "migrate:run": "knex --knexfile ./src/database/knexfile.js migrate:latest",
+    "knex": "knex --knexfile ./src/database/config.js",
+    "migrate:make": "knex --knexfile ./src/database/config.js migrate:make",
+    "migrate:run": "knex --knexfile ./src/database/config.js migrate:latest",
+    "migrate:rollback": "knex --knexfile ./src/database/config.js migrate:rollback",
     "test": "jest"
   },
   "keywords": [],

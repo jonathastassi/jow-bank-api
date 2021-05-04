@@ -1,4 +1,5 @@
-require('./config')
+const validateEnvironmentVariables = require('./config')
+validateEnvironmentVariables()
 
 const app = require('./app')
 
