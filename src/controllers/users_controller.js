@@ -1,18 +1,15 @@
 
 const database = require('../database')
-const repository = require('../repositories/user_repository')
-const handleResponseSuccess = require('./utils/handle_response_success')
-const handleResponseError = require('./utils/handle_response_error')
-const registerUser = require('../domains/commands/users/register_user')(repository(database))
-console.log(repository(database))
+const { userRepository } = require('../repositories')
+const { handleResponseSuccess, handleResponseError } = require('./utils/handle_response')
+const { registerUser } = require('../domains/commands/users')
 
 const register = (request, response) => {
   const { name, email, password, photo, cellphone } = request.body
 
-  // TODO
-  // const newUser = { name, email, password, photo, cellphone }
+  const newUser = { name, email, password, photo, cellphone }
 
-  registerUser.call(name, email, password, photo, cellphone)
+  registerUser(userRepository(database)).call(newUser)
     .then(handleResponseSuccess({ response, status: 201, message: 'User created with success' }))
     .catch(handleResponseError({ response, status: 500, message: 'Error on register user' }))
 }

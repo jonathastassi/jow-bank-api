@@ -1,15 +1,11 @@
-const create = (database) => ({ name, email, password, photo, cellphone }) => database('users').insert(
-  {
-    name,
-    email,
-    password,
-    photo,
-    cellphone
-  }
-)
+const create = (database) => (user) => database('users').insert(user)
   .returning(['name', 'email', 'photo', 'cellphone'])
-  .then(rows => rows[0])
+  .then(rows => {
+    console.log('eitajkbfewkq')
+    console.log(rows)
+    return rows[0]
+  })
 
-module.exports = (database) => ({
-  create: create(database)
+module.exports = (repository) => ({
+  create: create(repository)
 })
