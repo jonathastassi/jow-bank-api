@@ -1,11 +1,13 @@
-const config = {
-  client: process.env.DATABASE_CLIENT,
-  version: process.env.DATABASE_VERSION,
+const knex = require('knex')
+
+const connectionConfig = (databaseConfig) => ({
+  client: databaseConfig.client,
+  version: databaseConfig.version,
   connection: {
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME
+    host: databaseConfig.host,
+    user: databaseConfig.user,
+    password: databaseConfig.password,
+    database: databaseConfig.databaseName
   },
   pool: {
     min: 2,
@@ -14,6 +16,6 @@ const config = {
   migrations: {
     tableName: 'knex_migrations'
   }
-}
+})
 
-module.exports = require('knex')(config)
+module.exports = (databaseConfig) => knex(connectionConfig(databaseConfig))

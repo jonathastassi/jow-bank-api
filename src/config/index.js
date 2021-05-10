@@ -18,11 +18,55 @@ const validateEnvironmentVariables = () => {
   if (!process.env.DATABASE_NAME) {
     errors.push('DATABASE_NAME')
   }
+  if (!process.env.SECRET) {
+    errors.push('SECRET')
+  }
+  if (!process.env.DAILYLIMITTRANSACTION) {
+    errors.push('DAILYLIMITTRANSACTION')
+  }
   return errors
 }
 
-const isValid = validateEnvironmentVariables()
+const checkEnvironmentVariables = (errors) => {
+  if (errors.length) {
+    throw new Error(`Os campos (${errors.join(', ')}) não foram setados`)
+  }
+}
 
-if (isValid.length) {
-  throw new Error(`Os campos (${isValid.join(', ')}) não foram setados`)
+const getConfigDatabase = () => {
+  const errors = validateEnvironmentVariables()
+  checkEnvironmentVariables(errors)
+
+  return {
+    client: process.env.DATABASE_CLIENT,
+    version: process.env.DATABASE_VERSION,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    databaseName: process.env.DATABASE_NAME
+  }
+}
+
+const getConfigBusiness = () => {
+  const errors = validateEnvironmentVariables()
+  checkEnvironmentVariables(errors)
+
+  return {
+    dailyLimitTransaction: process.env.DAILYLIMITTRANSACTION
+  }
+}
+
+const getConfigSecurity = () => {
+  const errors = validateEnvironmentVariables()
+  checkEnvironmentVariables(errors)
+
+  return {
+    secret: process.env.SECRET
+  }
+}
+
+module.exports = {
+  databaseConfig: getConfigDatabase(),
+  businessConfig: getConfigBusiness(),
+  securityConfig: getConfigSecurity()
 }
