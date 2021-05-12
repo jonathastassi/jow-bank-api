@@ -1,9 +1,12 @@
 const create = (database) => (user) => database('users').insert(user)
   .returning(['name', 'email', 'photo', 'cellphone'])
   .then(rows => rows[0])
+  .catch(error => {
+    throw new Error(error.constraint)
+  })
 
 const findBy = (database) => ({ field, value }) => database('users').where(field, value)
-  .then(rows => rows[0])
+  .first()
 
 module.exports = (repository) => ({
   create: create(repository),

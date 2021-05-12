@@ -1,1 +1,1 @@
-module.exports = ({ response, status, message }) => (error) => response.status(status).json({ message, data: error.constraint ?? error })
+module.exports = ({ response, status, message }) => (error) => response.status(status).json({ message, data: { message: error.message } })
