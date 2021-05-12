@@ -16,9 +16,11 @@ const register = (request, response) => {
 }
 
 const login = (request, response) => {
-  const { email, password } = response.body
+  const { email, password } = request.body
 
-  loginUser(userRepository(database(databaseConfig))).call(email, password)
+  const user = { email, password }
+
+  loginUser(userRepository(database(databaseConfig))).call(user)
     .then(handleResponseSuccess({ response, status: 200, message: 'Login with success' }))
     .catch(handleResponseError({ response, status: 500, message: 'Error on login' }))
 }
