@@ -1,24 +1,26 @@
 const hashBcrypt = require('../../utils/hash_bcrypt')
 
-module.exports = (repository) => {
-  const call = (userIdToUpdate) => async ({ name, password, photo, cellphone }) => {
-    const user = await repository.findBy({ field: 'id', value: userIdToUpdate })
-    if (user == null) {
-      throw new Error('User not found')
-    }
-
-    if (user.id !== userIdToUpdate) {
-      throw new Error('Update denied')
-    }
-
-    const passwordEncripted = password == null ? null : hashBcrypt(password)
-
-    const userUpdated = await repository.update({ id: userIdToUpdate, name, password: passwordEncripted, photo, cellphone })
-
-    return userUpdated
+const call = (userRepository) => (userIdToUpdate) => async (userToUpdated) => {
+  const userStored = await userRepository.findBy({ field: 'id', value: userIdToUpdate })
+  if (userStored == null) {
+    throw new Error('User not found')
   }
 
-  return {
-    call
+  if (userStored.id !== userIdToUpdate) {
+    throw new Error('Update denied')
   }
+
+  const userWithPassword = {
+    ...userToUpdated,
+    id: userStored.id,
+    password: userToUpdated.password == null ? null : hashBcrypt(userToUpdated.password)
+  }
+
+  const userUpdated = await userRepository.update(userWithPassword)
+
+  return userUpdated
 }
+
+module.exports = (userRepository) => ({
+  call: call(userRepository)
+})

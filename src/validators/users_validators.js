@@ -18,7 +18,18 @@ const validateLogin = celebrate({
   })
 })
 
+const validateUpdate = celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    name: Joi.string().required().max(255),
+    email: Joi.string().email().required().max(255),
+    password: Joi.string().max(255),
+    photo: Joi.string().max(255),
+    cellphone: Joi.string().max(20)
+  })
+})
+
 module.exports = {
   validateRegister,
-  validateLogin
+  validateLogin,
+  validateUpdate
 }
