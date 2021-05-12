@@ -61,7 +61,8 @@ const getConfigSecurity = () => {
   checkEnvironmentVariables(errors)
 
   return {
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    validation_token_in_seconds: process.env.VALIDATION_TOKEN_IN_SECONDS || 1200
   }
 }
 
