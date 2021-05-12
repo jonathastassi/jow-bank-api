@@ -1,8 +1,8 @@
 const verifyBcrypt = require('../../utils/verify_bcrypt')
 const generateJWT = require('../../utils/generate_jwt')
 
-const call = (repository) => async ({ email, password }) => {
-  const user = await repository.findBy({ field: 'email', value: email })
+const call = (userRepository) => async ({ email, password }) => {
+  const user = await userRepository.findBy({ field: 'email', value: email })
 
   if (user === undefined) {
     throw new Error('Login incorrect')
@@ -22,6 +22,6 @@ const call = (repository) => async ({ email, password }) => {
   throw new Error('Login incorrect')
 }
 
-module.exports = (repository) => ({
-  call: call(repository)
+module.exports = (userRepository) => ({
+  call: call(userRepository)
 })
