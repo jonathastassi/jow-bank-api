@@ -1,13 +1,13 @@
 const hashBcrypt = require('../../utils/hash_bcrypt')
 
-const call = (repository) => (newUser) => {
+const call = (userRepository) => (newUser) => {
   const userWithPassword = {
     ...newUser,
     password: hashBcrypt(newUser.password)
   }
-  return repository.create(userWithPassword)
+  return userRepository.create(userWithPassword)
 }
 
-module.exports = (repository) => ({
-  call: call(repository)
+module.exports = (userRepository) => ({
+  call: call(userRepository)
 })
