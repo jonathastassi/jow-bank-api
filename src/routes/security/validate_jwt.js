@@ -8,7 +8,7 @@ const validateJWT = (req, res, next) => {
   const bearer = token.split(' ')
   const bearerToken = bearer[1]
 
-  jwt.verify(bearerToken, process.env.SECRET, function (err, decoded) {
+  jwt.verify(bearerToken, process.env.SECRET, (err, decoded) => {
     if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' })
     req.userId = decoded.payload.id
     req.userEmail = decoded.payload.email

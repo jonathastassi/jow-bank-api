@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const VALIDATION_TOKEN = 300
 
-const generateJWT = (payload) => jwt.sign({ payload }, process.env.SECRET, {
+const generateJWT = (user) => jwt.sign({ user }, process.env.SECRET, {
   expiresIn: VALIDATION_TOKEN
 })
 
