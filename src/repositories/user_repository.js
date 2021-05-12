@@ -8,7 +8,34 @@ const create = (database) => (user) => database('users').insert(user)
 const findBy = (database) => ({ field, value }) => database('users').where(field, value)
   .first()
 
+const update = (database) => ({ id, name, password, photo, cellphone }) => {
+  let fieldToUpdate
+  if (password == null) {
+    fieldToUpdate = {
+      name,
+      photo,
+      cellphone
+    }
+  } else {
+    fieldToUpdate = {
+      name,
+      password,
+      photo,
+      cellphone
+    }
+  }
+
+  return database('users')
+    .where({ id })
+    .update(fieldToUpdate)
+    .returning(['id', 'name', 'email', 'photo', 'cellphone'])
+    .then(rows => {
+      return rows[0]
+    })
+}
+
 module.exports = (repository) => ({
   create: create(repository),
-  findBy: findBy(repository)
+  findBy: findBy(repository),
+  update: update(repository)
 })
