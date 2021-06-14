@@ -1,13 +1,11 @@
-const knex = require('knex')
-
-const connectionConfig = (databaseConfig) => ({
-  client: databaseConfig.client,
-  version: databaseConfig.version,
+const connectionConfig = ({
+  client: "pg",
+  version: "7.2",
   connection: {
-    host: databaseConfig.host,
-    user: databaseConfig.user,
-    password: databaseConfig.password,
-    database: databaseConfig.databaseName
+    host: "localhost",
+    user: "postgres",
+    password: "postgres",
+    database: "jow_bank_dev"
   },
   pool: {
     min: 2,
@@ -18,4 +16,4 @@ const connectionConfig = (databaseConfig) => ({
   }
 })
 
-module.exports = (databaseConfig) => knex(connectionConfig(databaseConfig))
+module.exports = connectionConfig
