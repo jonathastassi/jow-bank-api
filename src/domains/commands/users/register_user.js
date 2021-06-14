@@ -1,9 +1,9 @@
-// const hashBcrypt = require('../../utils/hash_bcrypt')
+const hashBcrypt = require('../../utils/hash_bcrypt')
 
 const call = (userRepository) => (newUser) => {
   const userWithPassword = {
-    ...newUser
-    // password: hashBcrypt(newUser.password)
+    ...newUser,
+    password: hashBcrypt(newUser.password)
   }
   return userRepository.create(userWithPassword)
 }
